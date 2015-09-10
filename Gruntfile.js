@@ -61,6 +61,14 @@ module.exports = function(grunt) {
                 dest: 'build/ad/'
             }
         },
+        maxFilesize: {
+            ad: {
+                options: {
+                    maxBytes: 102400
+                },
+                src: ['build/ad/**']
+            }
+        },
         watch: {
             css: {
                 files: 'scss/*.scss',
@@ -96,7 +104,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-ejs');
+    grunt.loadNpmTasks('grunt-max-filesize');
     grunt.registerTask('default', ['dev','connect:server','watch']);
     grunt.registerTask('dev', ['uglify:dev','sass:dev','copy:assets','ejs:preview','ejs:ad']);
-    grunt.registerTask('dist', ['clean','uglify:dist','sass:dist','copy:assets','ejs:preview','ejs:ad']);
+    grunt.registerTask('dist', ['clean','uglify:dist','sass:dist','copy:assets','ejs:preview','ejs:ad','maxFilesize:ad']);
 }

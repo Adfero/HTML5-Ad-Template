@@ -17,6 +17,7 @@
     "grunt-contrib-sass": "^0.9.2",
     "grunt-contrib-uglify": "^0.9.2",
     "grunt-contrib-watch": "^0.6.1",
-    "grunt-ejs": "^0.3.0"
+    "grunt-ejs": "^0.3.0",
+    "grunt-max-filesize": "^0.1.0"
   }
 }
