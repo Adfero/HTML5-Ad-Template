@@ -1,12 +1,12 @@
 module.exports = function(grunt) {
     var uglify_files = {
-        'build/ad/config.js': [
+        'build/ad/scripts/script.js': [
             'js/vendor/*',
-            'js/config.js'
+            'js/script.js'
         ]
     };
     var sass_files = {
-        'build/ad/main.css' : 'scss/main.scss'
+        'build/ad/styles/style.css' : 'scss/main.scss'
     };
     var pkg = grunt.file.readJSON('package.json');
     grunt.initConfig({
@@ -55,9 +55,9 @@ module.exports = function(grunt) {
           },
         },
         copy: {
-            assets: {
+            images: {
                 expand: true,
-                src: ['assets/**'],
+                src: ['images/**'],
                 dest: 'build/ad/'
             }
         },
@@ -82,9 +82,9 @@ module.exports = function(grunt) {
                 files: 'ejs/*.ejs',
                 tasks: ['ejs:preview','ejs:ad']
             },
-            assets: {
-                files: 'assets/*',
-                tasks: ['copy:assets']
+            images: {
+                files: 'images/*',
+                tasks: ['copy:images']
             }
         },
         connect: {
@@ -106,6 +106,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-ejs');
     grunt.loadNpmTasks('grunt-max-filesize');
     grunt.registerTask('default', ['dev','connect:server','watch']);
-    grunt.registerTask('dev', ['uglify:dev','sass:dev','copy:assets','ejs:preview','ejs:ad']);
-    grunt.registerTask('dist', ['clean','uglify:dist','sass:dist','copy:assets','ejs:preview','ejs:ad','maxFilesize:ad']);
+    grunt.registerTask('dev', ['uglify:dev','sass:dev','copy:images','ejs:preview','ejs:ad']);
+    grunt.registerTask('dist', ['clean','uglify:dist','sass:dist','copy:images','ejs:preview','ejs:ad','maxFilesize:ad']);
 }
