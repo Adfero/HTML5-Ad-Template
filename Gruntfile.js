@@ -3,6 +3,9 @@ module.exports = function(grunt) {
         'build/ad/scripts/script.js': [
             'js/vendor/*',
             'js/script.js'
+        ],
+        'build/ad/scripts/EBLoader.js': [
+            'js/EBLoader.js'
         ]
     };
     var sass_files = {

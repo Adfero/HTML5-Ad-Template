@@ -3,10 +3,19 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="scripts/EBLoader.js"></script>
   <script src="scripts/script.js"></script>
+  <style type="text/css">body,#ad,#banner {width:<%= size.border ? size.width-2 : size.width; %>px;height:<%= size.border ? size.height-2 : size.height; %>px;}</style>
   <link href="styles/style.css" rel="stylesheet" />
 </head>
 <body>
-  <button id="clickthrough-button" class="button clickthrough">ClickThrough</button>
+  <div id="ad">
+    <div id="banner">
+      <div class="label"><strong>HTML5 Standard Banner:</strong></div>
+      <div class="buttons">
+        <button id="clickthrough-button" class="button clickthrough">ClickThrough</button>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

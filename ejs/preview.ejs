@@ -10,38 +10,12 @@
       margin: auto;
       border: none; 
       display: block;
-    }
-    .size-300x250 {
-      width: 300px;
-      height: 250px;
-    }
-    .size-300x600 {
-      width: 300px;
-      height: 600px;
-    }
-    .size-640x480 {
-      width: 640px;
-      height: 480px;
-    }
-    .size-180x150 {
-      width: 180px;
-      height: 150px;
-    }
-    .size-160x600 {
-      width: 160px;
-      height: 600px;
-    }
-    .size-728x90 {
-      width: 728px;
-      height: 90px;
-    }
-    .size-320x50 {
-      width: 728px;
-      height: 90px;
+      width: <%= size.width %>px;
+      height: <%= size.height %>px;
     }
   </style>
 </head>
 <body>
-  <iframe src="ad/index.html" class="ad size-<%= size %>"></iframe>
+  <iframe src="ad/index.html" class="ad"></iframe>
 </body>
 </html>

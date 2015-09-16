@@ -5,7 +5,11 @@
   "author": "jjones@adfero.com",
   "license": "ISC",
   "ad": {
-    "size": "300x250",
+    "size": {
+      "width": 300,
+      "height": 250,
+      "border": true
+    },
     "background": "black",
     "title": "Test Ad",
     "maxSize": 40000

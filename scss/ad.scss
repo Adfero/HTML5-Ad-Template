@@ -1,0 +1,17 @@
+body {
+    margin: 0px;
+}
+#ad {
+    display: block;
+    overflow: hidden;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+#banner {
+    position: absolute;
+    display: block;
+    overflow: hidden;
+}
