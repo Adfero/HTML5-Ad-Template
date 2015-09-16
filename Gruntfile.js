@@ -64,7 +64,7 @@ module.exports = function(grunt) {
         maxFilesize: {
             ad: {
                 options: {
-                    maxBytes: 102400
+                    maxBytes: pkg.ad.maxSize
                 },
                 src: ['build/ad/**']
             }

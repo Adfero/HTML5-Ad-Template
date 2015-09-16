@@ -7,7 +7,8 @@
   "ad": {
     "size": "300x250",
     "background": "black",
-    "title": "Test Ad"
+    "title": "Test Ad",
+    "maxSize": 40000
   },
   "dependencies": {
     "grunt": "^0.4.5",
