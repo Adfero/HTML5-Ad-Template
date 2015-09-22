@@ -3,9 +3,6 @@ module.exports = function(grunt) {
         'build/ad/scripts/script.js': [
             'js/vendor/*',
             'js/script.js'
-        ],
-        'build/ad/scripts/EBLoader.js': [
-            'js/EBLoader.js'
         ]
     };
     var sass_files = {
@@ -62,6 +59,11 @@ module.exports = function(grunt) {
                 expand: true,
                 src: ['images/**'],
                 dest: 'build/ad/'
+            },
+            scripts: {
+                expand: false,
+                src: ['js/EBLoader.js'],
+                dest: 'build/ad/scripts/EBLoader.js'
             }
         },
         maxFilesize: {
@@ -110,5 +112,5 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-max-filesize');
     grunt.registerTask('default', ['dev','connect:server','watch']);
     grunt.registerTask('dev', ['uglify:dev','sass:dev','copy:images','ejs:preview','ejs:ad']);
-    grunt.registerTask('dist', ['clean','uglify:dist','sass:dist','copy:images','ejs:preview','ejs:ad','maxFilesize:ad']);
+    grunt.registerTask('dist', ['clean','uglify:dist','sass:dist','copy:images','copy:scripts','ejs:preview','ejs:ad','maxFilesize:ad']);
 }
