@@ -111,6 +111,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-ejs');
     grunt.loadNpmTasks('grunt-max-filesize');
     grunt.registerTask('default', ['dev','connect:server','watch']);
-    grunt.registerTask('dev', ['uglify:dev','sass:dev','copy:images','ejs:preview','ejs:ad']);
+    grunt.registerTask('dev', ['uglify:dev','sass:dev','copy:images','copy:scripts','ejs:preview','ejs:ad']);
     grunt.registerTask('dist', ['clean','uglify:dist','sass:dist','copy:images','copy:scripts','ejs:preview','ejs:ad','maxFilesize:ad']);
 }
