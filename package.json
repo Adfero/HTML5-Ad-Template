@@ -1,19 +1,27 @@
 {
   "name": "ad-template",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Template for creating HTML5 ads.",
   "author": "jjones@adfero.com",
   "license": "ISC",
-  "ad": {
-    "size": {
-      "width": 300,
-      "height": 250,
-      "border": true
-    },
-    "background": "black",
-    "title": "Test Ad",
-    "maxSize": 40000
-  },
+  "ads": [
+    {
+      "name": "ad-test",
+      "files": {
+        "ejs": "ad.ejs",
+        "scss": "main.scss",
+        "js": "script.js"
+      },
+      "size": {
+        "width": 300,
+        "height": 250,
+        "border": true
+      },
+      "background": "black",
+      "title": "Test Ad",
+      "maxSize": 40000
+    }
+  ],
   "dependencies": {
     "grunt": "^0.4.5",
     "grunt-contrib-clean": "^0.6.0",

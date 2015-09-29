@@ -1,14 +1,34 @@
 module.exports = function(grunt) {
-    var uglify_files = {
-        'build/ad/scripts/script.js': [
-            'js/vendor/*',
-            'js/script.js'
-        ]
-    };
-    var sass_files = {
-        'build/ad/styles/style.css' : 'scss/main.scss'
-    };
     var pkg = grunt.file.readJSON('package.json');
+
+    var uglify_files = {};
+    var sass_files = {};
+    var ejs = {}
+    var ejsPreviewJobs = [];
+    var ejsAdJobs = [];
+
+    pkg.ads.forEach(function(ad) {
+        uglify_files['build/ads/' + ad.name + '/scripts/script.js'] = [
+            'js/vendor/*',
+            'js/' + ad.files.js
+        ];
+        sass_files['build/ads/' + ad.name + '/styles/styles.css'] = 'scss/' + ad.files.scss;
+        ejs['preview-' + ad.name] = {
+            src: ['ejs/preview.ejs'],
+            dest: 'build/preview-' + ad.name + '.html',
+            ext: '.html',
+            options: ad
+        }
+        ejs['ad-' + ad.name] = {
+            src: ['ejs/' + ad.files.ejs],
+            dest: 'build/ads/' + ad.name + '/index.html',
+            ext: '.html',
+            options: ad
+        }
+        ejsPreviewJobs.push('preview-' + ad.name);
+        ejsAdJobs.push('ad-' + ad.name)l
+    });
+    
     grunt.initConfig({
         pkg: pkg,
         clean: ['./build'],
@@ -40,20 +60,7 @@ module.exports = function(grunt) {
                 files: sass_files
             }
         },
-        ejs: {
-          preview: {
-            src: ['ejs/preview.ejs'],
-            dest: 'build/index.html',
-            ext: '.html',
-            options: pkg.ad
-          },
-          ad: {
-            src: ['ejs/index.ejs'],
-            dest: 'build/ad/index.html',
-            ext: '.html',
-            options: pkg.ad
-          },
-        },
+        ejs: ejs
         copy: {
             images: {
                 expand: true,
@@ -88,7 +95,7 @@ module.exports = function(grunt) {
                 tasks: ['ejs:preview','ejs:ad']
             },
             images: {
-                files: 'images/*',
+                files: 'images/**',
                 tasks: ['copy:images']
             }
         },
