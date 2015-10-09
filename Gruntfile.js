@@ -3,30 +3,54 @@ module.exports = function(grunt) {
 
     var uglify_files = {};
     var sass_files = {};
-    var ejs = {}
-    var ejsPreviewJobs = [];
-    var ejsAdJobs = [];
+    var ejs = {};
+    var copy = {};
+    var ejsJobNames = [];
+    var copyJobNames = [];
 
     pkg.ads.forEach(function(ad) {
-        uglify_files['build/ads/' + ad.name + '/scripts/script.js'] = [
+        var buildDir = 'build/ads/' + ad.name;
+        uglify_files[buildDir + '/scripts/script.js'] = [
             'js/vendor/*',
             'js/' + ad.files.js
         ];
-        sass_files['build/ads/' + ad.name + '/styles/styles.css'] = 'scss/' + ad.files.scss;
+        sass_files[buildDir + '/styles/styles.css'] = 'scss/' + ad.files.scss;
+        
         ejs['preview-' + ad.name] = {
             src: ['ejs/preview.ejs'],
             dest: 'build/preview-' + ad.name + '.html',
             ext: '.html',
             options: ad
         }
+        ejsJobNames.push('ejs:preview-' + ad.name);
+
         ejs['ad-' + ad.name] = {
             src: ['ejs/' + ad.files.ejs],
-            dest: 'build/ads/' + ad.name + '/index.html',
+            dest: buildDir + '/index.html',
             ext: '.html',
             options: ad
         }
-        ejsPreviewJobs.push('preview-' + ad.name);
-        ejsAdJobs.push('ad-' + ad.name)l
+        ejsJobNames.push('ejs:ad-' + ad.name);
+
+        copy['images-' + ad.name] = {
+            expand: true,
+            src: ['images/' + ad.name + '/**'],
+            dest: buildDir + '/'
+        };
+        copyJobNames.push('copy:images-' + ad.name);
+        copy['images-shared-' + ad.name] = {
+            expand: true,
+            src: ['images/shared/**'],
+            dest: buildDir + '/'
+        };
+        copyJobNames.push('copy:images-shared-' + ad.name);
+
+        copy['ebloader-' + ad.name] = {
+            expand: false,
+            src: ['js/EBLoader.js'],
+            dest: buildDir+'/scripts/EBLoader.js'
+        };
+        copyJobNames.push('copy:ebloader-' + ad.name);
     });
     
     grunt.initConfig({
@@ -60,25 +84,14 @@ module.exports = function(grunt) {
                 files: sass_files
             }
         },
-        ejs: ejs
-        copy: {
-            images: {
-                expand: true,
-                src: ['images/**'],
-                dest: 'build/ad/'
-            },
-            scripts: {
-                expand: false,
-                src: ['js/EBLoader.js'],
-                dest: 'build/ad/scripts/EBLoader.js'
-            }
-        },
+        ejs: ejs,
+        copy: copy,
         maxFilesize: {
             ad: {
                 options: {
-                    maxBytes: pkg.ad.maxSize
+                    maxBytes: pkg.maxSize
                 },
-                src: ['build/ad/**']
+                src: ['build/ads/**']
             }
         },
         watch: {
@@ -92,11 +105,11 @@ module.exports = function(grunt) {
             },
             ejs: {
                 files: 'ejs/*.ejs',
-                tasks: ['ejs:preview','ejs:ad']
+                tasks: ejsJobNames
             },
             images: {
                 files: 'images/**',
-                tasks: ['copy:images']
+                tasks: copyJobNames
             }
         },
         connect: {
@@ -118,6 +131,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-ejs');
     grunt.loadNpmTasks('grunt-max-filesize');
     grunt.registerTask('default', ['dev','connect:server','watch']);
-    grunt.registerTask('dev', ['uglify:dev','sass:dev','copy:images','copy:scripts','ejs:preview','ejs:ad']);
-    grunt.registerTask('dist', ['clean','uglify:dist','sass:dist','copy:images','copy:scripts','ejs:preview','ejs:ad','maxFilesize:ad']);
+    grunt.registerTask('dev', ['uglify:dev','sass:dev'].concat(copyJobNames).concat(ejsJobNames));
+    grunt.registerTask('dist', ['clean','uglify:dist','sass:dist'].concat(copyJobNames).concat(ejsJobNames).concat(['maxFilesize:ad']));
 }

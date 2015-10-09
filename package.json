@@ -4,6 +4,7 @@
   "description": "Template for creating HTML5 ads.",
   "author": "jjones@adfero.com",
   "license": "ISC",
+  "maxSize": 40000,
   "ads": [
     {
       "name": "ad-test",
@@ -18,8 +19,7 @@
         "border": true
       },
       "background": "black",
-      "title": "Test Ad",
-      "maxSize": 40000
+      "title": "Test Ad"
     }
   ],
   "dependencies": {
