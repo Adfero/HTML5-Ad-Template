@@ -7,6 +7,9 @@ module.exports = function(grunt) {
     var copy = {};
     var ejsJobNames = [];
     var copyJobNames = [];
+    var zip = {};
+    var zipJobNames = [];
+    var buildId = process.env.BUILD_ID ? process.env.BUILD_ID : new Date().getTime();
 
     pkg.ads.forEach(function(ad) {
         var buildDir = 'build/ads/' + ad.name;
@@ -51,6 +54,13 @@ module.exports = function(grunt) {
             dest: buildDir+'/scripts/EBLoader.js'
         };
         copyJobNames.push('copy:ebloader-' + ad.name);
+
+        zip['ad-' + ad.name] = {
+            'cwd': buildDir,
+            'src': [buildDir + '/**'],
+            'dest': 'build/archive/' + ad.name + '_' + buildId + '.zip'
+        };
+        zipJobNames.push('zip:ad-' + ad.name);
     });
     
     grunt.initConfig({
@@ -86,6 +96,7 @@ module.exports = function(grunt) {
         },
         ejs: ejs,
         copy: copy,
+        zip: zip,
         maxFilesize: {
             ad: {
                 options: {
@@ -130,7 +141,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-ejs');
     grunt.loadNpmTasks('grunt-max-filesize');
+    grunt.loadNpmTasks('grunt-zip');
     grunt.registerTask('default', ['dev','connect:server','watch']);
     grunt.registerTask('dev', ['uglify:dev','sass:dev'].concat(copyJobNames).concat(ejsJobNames));
-    grunt.registerTask('dist', ['clean','uglify:dist','sass:dist'].concat(copyJobNames).concat(ejsJobNames).concat(['maxFilesize:ad']));
+    grunt.registerTask('dist', ['clean','uglify:dist','sass:dist'].concat(copyJobNames).concat(ejsJobNames).concat(['maxFilesize:ad']).concat(zipJobNames));
 }
