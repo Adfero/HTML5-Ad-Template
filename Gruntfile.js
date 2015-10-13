@@ -24,7 +24,7 @@ module.exports = function(grunt) {
             dest: 'build/preview-' + ad.name + '.html',
             ext: '.html',
             options: ad
-        }
+        };
         ejsJobNames.push('ejs:preview-' + ad.name);
 
         ejs['ad-' + ad.name] = {
@@ -32,7 +32,7 @@ module.exports = function(grunt) {
             dest: buildDir + '/index.html',
             ext: '.html',
             options: ad
-        }
+        };
         ejsJobNames.push('ejs:ad-' + ad.name);
 
         copy['images-' + ad.name] = {
@@ -145,4 +145,4 @@ module.exports = function(grunt) {
     grunt.registerTask('default', ['dev','connect:server','watch']);
     grunt.registerTask('dev', ['uglify:dev','sass:dev'].concat(copyJobNames).concat(ejsJobNames));
     grunt.registerTask('dist', ['clean','uglify:dist','sass:dist'].concat(copyJobNames).concat(ejsJobNames).concat(['maxFilesize:ad']).concat(zipJobNames));
-}
+};
