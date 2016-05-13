@@ -3,7 +3,14 @@ module.exports = function(grunt) {
 
     var uglify_files = {};
     var sass_files = {};
-    var ejs = {};
+    var ejs = {
+      'index': {
+        'src': 'ejs/index.ejs',
+        'dest': 'build/index.html',
+        'ext': '.html',
+        'options': pkg
+      }
+    };
     var copy = {};
     var ejsJobNames = [];
     var copyJobNames = [];
@@ -18,7 +25,7 @@ module.exports = function(grunt) {
             'js/' + ad.files.js
         ];
         sass_files[buildDir + '/styles/styles.css'] = 'scss/' + ad.files.scss;
-        
+
         ejs['preview-' + ad.name] = {
             src: ['ejs/preview.ejs'],
             dest: 'build/preview-' + ad.name + '.html',
@@ -62,7 +69,7 @@ module.exports = function(grunt) {
         };
         zipJobNames.push('zip:ad-' + ad.name);
     });
-    
+
     grunt.initConfig({
         pkg: pkg,
         clean: ['./build'],
@@ -143,6 +150,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-max-filesize');
     grunt.loadNpmTasks('grunt-zip');
     grunt.registerTask('default', ['dev','connect:server','watch']);
-    grunt.registerTask('dev', ['uglify:dev','sass:dev'].concat(copyJobNames).concat(ejsJobNames));
-    grunt.registerTask('dist', ['clean','uglify:dist','sass:dist'].concat(copyJobNames).concat(ejsJobNames).concat(['maxFilesize:ad']).concat(zipJobNames));
+    grunt.registerTask('dev', ['uglify:dev','sass:dev','ejs:index'].concat(copyJobNames).concat(ejsJobNames));
+    grunt.registerTask('dist', ['clean','uglify:dist','sass:dist','ejs:index'].concat(copyJobNames).concat(ejsJobNames).concat(['maxFilesize:ad']).concat(zipJobNames));
 };
