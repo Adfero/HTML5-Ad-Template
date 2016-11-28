@@ -42,18 +42,18 @@ module.exports = function(grunt) {
         };
         ejsJobNames.push('ejs:ad-' + ad.name);
 
-        copy['images-' + ad.name] = {
+        copy['assets-' + ad.name] = {
             expand: true,
-            src: ['images/' + ad.name + '/**'],
+            src: ['assets/' + ad.name + '/**'],
             dest: buildDir + '/'
         };
-        copyJobNames.push('copy:images-' + ad.name);
-        copy['images-shared-' + ad.name] = {
+        copyJobNames.push('copy:assets-' + ad.name);
+        copy['assets-shared-' + ad.name] = {
             expand: true,
-            src: ['images/shared/**'],
+            src: ['assets/shared/**'],
             dest: buildDir + '/'
         };
-        copyJobNames.push('copy:images-shared-' + ad.name);
+        copyJobNames.push('copy:assets-shared-' + ad.name);
 
         copy['ebloader-' + ad.name] = {
             expand: false,
@@ -125,8 +125,8 @@ module.exports = function(grunt) {
                 files: 'ejs/*.ejs',
                 tasks: ejsJobNames
             },
-            images: {
-                files: 'images/**',
+            assets: {
+                files: 'assets/**',
                 tasks: copyJobNames
             }
         },
