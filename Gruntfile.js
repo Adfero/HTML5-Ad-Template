@@ -1,5 +1,7 @@
 module.exports = function(grunt) {
     var pkg = grunt.file.readJSON('package.json');
+    const sass = require('node-sass');
+
 
     var uglify_files = {};
     var sass_files = {};
@@ -89,6 +91,7 @@ module.exports = function(grunt) {
         sass: {
             dist: {
                 options: {
+                    implementation: sass,
                     style: 'compressed',
                     sourcemap: 'none'
                 },
@@ -96,6 +99,7 @@ module.exports = function(grunt) {
             },
             dev: {
                 options: {
+                    implementation: sass,
                     style: 'expanded'
                 },
                 files: sass_files
